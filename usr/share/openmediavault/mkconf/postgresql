@@ -50,14 +50,10 @@ fi
 # Get settings.
 data_sharedfolderref=$(omv_config_get "${OMV_POSTGRESQL_PLUGIN_XPATH}/data.sharedfolderref")
 data_directory="$(omv_get_sharedfolder_path "${data_sharedfolderref}")"
-
-current_port_line=`cat ${POSTGRESQL_CONFIG} | grep "port ="`
 port=$(omv_config_get "${xpath}/port")
-
-current_listen_line=`cat ${POSTGRESQL_CONFIG} | grep "listen_addresses ="`
 listen_addresses=$(omv_config_get "${xpath}/bind_address")
+extra_options=$(omv_config_get "${xpath}/extra_options")
 
-current_data_directory_line=`cat ${POSTGRESQL_CONFIG} | grep data_directory`
 current_data_directory=`cat ${POSTGRESQL_CONFIG} | grep data_directory | cut -d\' -f2`
 
 # Check if any database files exists in the current data directory.
@@ -69,13 +65,40 @@ if ! detect_database_files "${current_data_directory}" ; then
     fi
 fi
 
-sed -i "s/${current_data_directory_line/data_directory = '${current_data_directory}'/g" "${POSTGRESQL_CONFIG}"
-sed -i "s/${current_port_line/port = '${port}'/g" "${POSTGRESQL_CONFIG}"
-sed -i "s/${current_listen_line/listen_addresses = '${listen_addresses}'/g" "${POSTGRESQL_CONFIG}"
+lc1=`cat ${POSTGRESQL_CONFIG} | grep lc_messages`
+lc2=`cat ${POSTGRESQL_CONFIG} | grep lc_monetary`
+lc3=`cat ${POSTGRESQL_CONFIG} | grep lc_numeric`
+lc4=`cat ${POSTGRESQL_CONFIG} | grep lc_time`
+dt1=`cat ${POSTGRESQL_CONFIG} | grep default_text_search_config`
 
+cat <<EOF > ${POSTGRESQL_CONFIG}
+# this file was automatically generated
+data_directory = '${current_data_directory}'
 
-# Set permissions on the configuration file.
-chmod 644 ${OMV_POSTGRESQL_PLUGIN_CONFIG}
+hba_file = '/etc/postgresql/9.1/main/pg_hba.conf'
+ident_file = '/etc/postgresql/9.1/main/pg_ident.conf'
+external_pid_file = '/var/run/postgresql/9.1-main.pid'
+
+listen_address = '${listen_address}'
+
+port = ${port}
+max_connections = 100
+
+unix_socket_directory = '/var/run/postgresql'
+ssl = true
+shared_buffers = 32MB
+log_line_prefix = '%t '
+
+${lc1}
+${lc2}
+${lc3}
+${lc4}
+
+${dt1}
+
+${extra_options}
+EOF
+
 
 if [ "${current_data_directory}" != "${data_directory}" ]; then
     # If the choosen directory already has database files, move the current
