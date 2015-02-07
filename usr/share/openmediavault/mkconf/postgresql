@@ -45,7 +45,7 @@ detect_database_files()
 
 get_data_directory_from_config()
 {
-    cat "${1}" | grep data_directory | sed 's/data_directory\s\+=\s\+//g'
+    cat "${1}" | grep data_directory | cut -d\' -f2
 }
 
 # Generate configuration only if the service is enabled.
@@ -107,7 +107,7 @@ if [ "${current_data_directory}" != "${data_directory}" ]; then
     fi
 
     # Take ownership of the shared folder.
-    chown -R postgresql:postgresql "${data_directory}"
+    chown -R postgres:postgres "${data_directory}"
 fi
 
 exit 0
