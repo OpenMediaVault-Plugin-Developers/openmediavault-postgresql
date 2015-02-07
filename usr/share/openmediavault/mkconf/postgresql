@@ -50,9 +50,9 @@ fi
 # Get settings.
 data_sharedfolderref=$(omv_config_get "${OMV_POSTGRESQL_PLUGIN_XPATH}/data.sharedfolderref")
 data_directory="$(omv_get_sharedfolder_path "${data_sharedfolderref}")"
-port=$(omv_config_get "${xpath}/port")
-listen_addresses=$(omv_config_get "${xpath}/bind_address")
-extra_options=$(omv_config_get "${xpath}/extra_options")
+port=$(omv_config_get "${OMV_POSTGRESQL_PLUGIN_XPATH}/port")
+listen_addresses=$(omv_config_get "${OMV_POSTGRESQL_PLUGIN_XPATH}/bind_address")
+extra_options=$(omv_config_get "${OMV_POSTGRESQL_PLUGIN_XPATH}/extra_options")
 
 current_data_directory=`cat ${POSTGRESQL_CONFIG} | grep data_directory | cut -d\' -f2`
 
