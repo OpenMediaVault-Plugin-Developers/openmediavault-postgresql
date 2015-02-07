@@ -13,6 +13,7 @@ case "$1" in
         POSTGRESQL_CONF="${POSTGRESQL_DIR}/postgresql.conf"
         OMV_POSTGRESQL_DIR="${POSTGRESQL_DIR}/conf.d"
         OMV_POSTGRESQL_CONF="${OMV_POSTGRESQL_DIR}/openmediavault-postgresql.conf"
+        INCLUDE_STRING="include_dir 'conf.d'"
 
         # Add the default configuration
         if ! omv_config_exists "${SERVICE_XPATH}"; then
@@ -28,8 +29,10 @@ case "$1" in
 
         mkdir -p "${OMV_POSTGRESQL_DIR}"
 
-        # add check for include_dir line before adding it
-        echo "include_dir 'conf.d'" >> "${POSTGRESQL_CONF}"
+        # add include string to config file
+        if ! grep -q "${INCLUDE_STRING}" "${POSTGRESQL_CONF}"; then
+            echo "${INCLUDE_STRING}" >> "${POSTGRESQL_CONF}"
+        fi
 
         # Activate package triggers. These triggers are only set during the
         # package installation.
