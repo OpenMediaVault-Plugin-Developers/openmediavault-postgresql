@@ -24,24 +24,6 @@ set -e
 POSTGRESQL_CONFIG="/etc/postgresql/9.1/main/postgresql.conf"
 OMV_POSTGRESQL_PLUGIN_XPATH="//services/postgresql"
 
-detect_database_files()
-{
-    if [ ! -d "${1}" ]; then
-        echo "Directory ${1} doesn't exist."
-
-        return 1
-    fi
-
-    # Check for postgresql database files
-    if [ ! -e "${1}/PG_VERSION" ]; then
-        echo "Unable to find any database files in ${1}."
-
-        return 3
-    fi
-
-    return 0
-}
-
 # Generate configuration only if the service is enabled.
 if [ "$(omv_config_get "${OMV_POSTGRESQL_PLUGIN_XPATH}/enable")" != "1" ]; then
     exit 0
@@ -55,31 +37,22 @@ listen_addresses=$(omv_config_get "${OMV_POSTGRESQL_PLUGIN_XPATH}/bind_address")
 extra_options=$(omv_config_get "${OMV_POSTGRESQL_PLUGIN_XPATH}/extra_options")
 
 current_data_directory=`cat ${POSTGRESQL_CONFIG} | grep data_directory | cut -d\' -f2`
-
-# Check if any database files exists in the current data directory.
-if ! detect_database_files "${current_data_directory}" ; then
-    if ! detect_database_files "${data_directory}" ; then
-        exit 3
-    else
-        current_data_directory=${data_directory}
-    fi
-fi
-
 lc1=`cat ${POSTGRESQL_CONFIG} | grep lc_messages`
 lc2=`cat ${POSTGRESQL_CONFIG} | grep lc_monetary`
 lc3=`cat ${POSTGRESQL_CONFIG} | grep lc_numeric`
 lc4=`cat ${POSTGRESQL_CONFIG} | grep lc_time`
 dt1=`cat ${POSTGRESQL_CONFIG} | grep default_text_search_config`
 
+
 cat <<EOF > ${POSTGRESQL_CONFIG}
 # this file was automatically generated
-data_directory = '${current_data_directory}'
+data_directory = '${data_directory}'
 
 hba_file = '/etc/postgresql/9.1/main/pg_hba.conf'
 ident_file = '/etc/postgresql/9.1/main/pg_ident.conf'
 external_pid_file = '/var/run/postgresql/9.1-main.pid'
 
-listen_address = '${listen_address}'
+listen_addresses = '${listen_addresses}'
 
 port = ${port}
 max_connections = 100
@@ -101,18 +74,14 @@ EOF
 
 
 if [ "${current_data_directory}" != "${data_directory}" ]; then
-    # If the choosen directory already has database files, move the current
-    # ones. Otherwise use the existing files. This is useful if the user has
-    # reinstalled and wants to reuse the old files.
-    if ! detect_database_files "${data_directory}" ; then
-        # Copy current data to the new directory and remove all files from the
-        # old directory (but not the directory itself).
-        cp -rfp ${current_data_directory}/* ${data_directory}/
-        rm -rf ${current_data_directory}/*
-    fi
-
-    # Take ownership of the shared folder.
-    chown -R postgres:postgres "${data_directory}"
+    # Copy current data to the new directory and remove all files from the
+    # old directory (but not the directory itself).
+    cp -rfp ${current_data_directory}/* ${data_directory}/
+    rm -rf ${current_data_directory}/*
 fi
+
+# Take ownership of the shared folder.
+chown -R postgres:postgres "${data_directory}"
+chmod -R 0700 "${data_directory}"
 
 exit 0
