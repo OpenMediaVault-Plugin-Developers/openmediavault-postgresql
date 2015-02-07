@@ -1,0 +1,49 @@
+#!/bin/sh
+
+set -e
+
+. /etc/default/openmediavault
+. /usr/share/openmediavault/scripts/helper-functions
+
+case "$1" in
+    configure)
+        SERVICE_XPATH_NAME="postgresql"
+        SERVICE_XPATH="/config/services/${SERVICE_XPATH_NAME}"
+        POSTGRESQL_DIR="/etc/postgresql/9.1/main"
+        POSTGRESQL_CONF="${POSTGRESQL_DIR}/postgresql.conf"
+        OMV_POSTGRESQL_DIR="${POSTGRESQL_DIR}/conf.d"
+        OMV_POSTGRESQL_CONF="${OMV_POSTGRESQL_DIR}/openmediavault-postgresql.conf"
+
+        # Add the default configuration
+        if ! omv_config_exists "${SERVICE_XPATH}"; then
+            omv_config_add_element "/config/services" "${SERVICE_XPATH_NAME}"
+            omv_config_add_element "${SERVICE_XPATH}" "enable" "0"
+            omv_config_add_element "${SERVICE_XPATH}" "port" "5432"
+            omv_config_add_element "${SERVICE_XPATH}" "bind_address" "127.0.0.1"
+            omv_config_add_element "${SERVICE_XPATH}" "data.sharedfolderref"
+            omv_config_add_element "${SERVICE_XPATH}" "extra_options" ""
+            omv_config_add_element "${SERVICE_XPATH}" "enable_management_site" "0"
+            omv_config_add_element "${SERVICE_XPATH}" "show_tab" "0"
+        fi
+
+        mkdir -p "${OMV_POSTGRESQL_DIR}"
+
+        # add check for include_dir line before adding it
+        echo "include_dir 'conf.d'" >> "${POSTGRESQL_CONF}"
+
+        # Activate package triggers. These triggers are only set during the
+        # package installation.
+        dpkg-trigger update-fixperms
+        dpkg-trigger update-locale
+    ;;
+
+    abort-upgrade|abort-remove|abort-deconfigure)
+    ;;
+
+    *)
+        echo "postinst called with unknown argument" >&2
+        exit 1
+    ;;
+esac
+
+exit 0

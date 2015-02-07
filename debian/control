@@ -1,0 +1,18 @@
+Source: openmediavault-postgresql
+Section: net
+XB-Plugin-Section: network
+Priority: optional
+Maintainer: OpenMediaVault Plugin Developers <plugins@omv-extras.org>
+Build-Depends: debhelper (>= 9.0.0)
+Standards-Version: 3.9.3
+Homepage: http://omv-extras.org/
+
+Package: openmediavault-postgresql
+Architecture: all
+Depends: openmediavault (>= 1.12), postgresql-9.1, mywebsql,
+ php5-pgsql, dbconfig-common ${misc:Depends}
+Description: MySQL plugin for OpenMediaVault
+ PostgreSQL is an open source database server. The plugin allows you to
+ specify a share for databases and reset the PostgreSQL root password.
+ MyWebSQL is provided for database management (database, table, and
+ user creation/editing). Queries can also be run for data mining.
