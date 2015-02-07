@@ -23,19 +23,19 @@ set -e
 
 PHP_FPM_POOL_DIR=/etc/php5/fpm/pool.d
 
-SQL_MANAGEMENT_POOL_CONF="${PHP_FPM_POOL_DIR}/openmediavault-mysql-management-site.conf"
+SQL_MANAGEMENT_POOL_CONF="${PHP_FPM_POOL_DIR}/openmediavault-postgresql-management-site.conf"
 
 if [ -e "${SQL_MANAGEMENT_POOL_CONF}" ]; then
     rm ${SQL_MANAGEMENT_POOL_CONF}
 fi
 
-if [ "$(omv_config_get "//services/mysql/enable_management_site")" != "1" ]; then
+if [ "$(omv_config_get "//services/postgresql/enable_management_site")" != "1" ]; then
     exit 0
 fi
 
 cat <<EOF > "${SQL_MANAGEMENT_POOL_CONF}"
-[openmediavault-mysql]
-listen = /var/run/php5-fpm-openmediavault-mysql.sock
+[openmediavault-postgresql]
+listen = /var/run/php5-fpm-openmediavault-postgresql.sock
 listen.owner = www-data
 listen.group = www-data
 listen.mode = 0600

@@ -21,45 +21,45 @@ set -e
 . /etc/default/openmediavault
 . /usr/share/openmediavault/scripts/helper-functions
 
-SQL_MANAGEMENT_SITE_CONF="/etc/nginx/openmediavault-webgui.d/openmediavault-mysql-management-site.conf"
+SQL_MANAGEMENT_SITE_CONF="/etc/nginx/openmediavault-webgui.d/openmediavault-postgresql-management-site.conf"
 
 if [ -e "${SQL_MANAGEMENT_SITE_CONF}" ]; then
     rm ${SQL_MANAGEMENT_SITE_CONF}
 fi
 
-if [ "$(omv_config_get "//services/mysql/enable_management_site")" != "1" ]; then
+if [ "$(omv_config_get "//services/postgresql/enable_management_site")" != "1" ]; then
     exit 0
 fi
 
 cat <<EOF > "${SQL_MANAGEMENT_SITE_CONF}"
-location /mysql/ {
+location /postgresql/ {
     alias /usr/share/mywebsql/;
     index index.php;
     location ~ \.php$ {
         fastcgi_split_path_info ^(.+\.php)(/.+)$;
-        fastcgi_pass unix:/var/run/php5-fpm-openmediavault-mysql.sock;
+        fastcgi_pass unix:/var/run/php5-fpm-openmediavault-postgresql.sock;
         fastcgi_index index.php;
         include fastcgi_params;
     }
-    location = /mysql/favicon.ico {
+    location = /postgresql/favicon.ico {
         log_not_found off;
         access_log off;
     }
-    location = /mysql/robots.txt {
+    location = /postgresql/robots.txt {
         allow all;
         log_not_found off;
         access_log off;
     }
-    location /mysql/ {
-        try_files \$uri \$uri/ /mysql/index.php?\$args;
+    location /postgresql/ {
+        try_files \$uri \$uri/ /postgresql/index.php?\$args;
     }
-    location ~ /mysql/\. {
+    location ~ /postgresql/\. {
         deny all;
     }
-    location ~* /mysql/(?:config)/.*\.php$ {
+    location ~* /postgresql/(?:config)/.*\.php$ {
         deny all;
     }
-    location ~* /mysql/\.(js|css|png|jpg|jpeg|gif|ico)$ {
+    location ~* /postgresql/\.(js|css|png|jpg|jpeg|gif|ico)$ {
         expires max;
         log_not_found off;
     }
