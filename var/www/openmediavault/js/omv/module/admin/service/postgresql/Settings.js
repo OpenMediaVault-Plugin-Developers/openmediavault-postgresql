@@ -161,7 +161,7 @@ Ext.define("OMV.module.admin.service.postgresql.Settings", {
             },{
                 xtype      : "textfield",
                 name       : "bind_address",
-                fieldLabel : _("Listen address"),
+                fieldLabel : _("Listen addresses"),
                 allowBlank : false,
                 value      : "localhost",
                 plugins    : [{
@@ -191,7 +191,7 @@ Ext.define("OMV.module.admin.service.postgresql.Settings", {
             }]
         },{
             xtype    : "fieldset",
-            title    : _("Reset PostgreSQL root password"),
+            title    : _("Reset PostgreSQL postgres password"),
             defaults : {
                 labelSeparator : ""
             },
