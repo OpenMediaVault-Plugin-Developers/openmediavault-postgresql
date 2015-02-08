@@ -5,17 +5,12 @@ set -e
 . /etc/default/openmediavault
 . /usr/share/openmediavault/scripts/helper-functions
 
-OMV_POSTGRESQL_CONF="/etc/postgresql/9.1/main/conf.d/openmediavault-postgresql.conf"
 SQL_MANAGEMENT_SITE_CONF="/etc/nginx/openmediavault-webgui.d/openmediavault-postgresql-management-site.conf"
 SQL_MANAGEMENT_POOL_CONF="/etc/php5/fpm/pool.d/openmediavault-postgresql-management-site.conf"
 
 case "$1" in
     purge)
         omv_config_delete "//services/postgresql"
-
-        if [ -e "${OMV_POSTGRESQL_CONF}" ]; then
-            /bin/rm -f "${OMV_POSTGRESQL_CONF}"
-        fi
     ;;
 
     remove)

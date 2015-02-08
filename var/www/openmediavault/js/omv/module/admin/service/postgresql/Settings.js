@@ -173,7 +173,7 @@ Ext.define("OMV.module.admin.service.postgresql.Settings", {
                 name       : "data.sharedfolderref",
                 fieldLabel : _("Data directory"),
                 allowBlank : true,
-                allowNone  : true,
+                allowNone  : false,
                 plugins    : [{
                     ptype : "fieldinfo",
                     text  : _("The location where PostgreSQL stores its data.") + " " +
