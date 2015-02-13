@@ -161,12 +161,13 @@ Ext.define("OMV.module.admin.service.postgresql.Settings", {
             },{
                 xtype      : "textfield",
                 name       : "bind_address",
-                fieldLabel : _("Listen addresses"),
+                fieldLabel : _("Bind address"),
+                vtype      : "IPv4Net",
                 allowBlank : false,
-                value      : "localhost",
+                value      : "127.0.0.1",
                 plugins    : [{
                     ptype : "fieldinfo",
-                    text  : _("IP address to listen on. Use * for all host IPs.")
+                    text  : _("IP address to listen on. Use 0.0.0.0 for all host IPs.")
                 }]
             },{
                 xtype      : "sharedfoldercombo",

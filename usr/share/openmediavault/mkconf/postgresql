@@ -22,6 +22,7 @@ set -e
 . /usr/share/openmediavault/scripts/helper-functions
 
 POSTGRESQL_CONFIG="/etc/postgresql/9.1/main/postgresql.conf"
+POSTGRESQL_HBA_CONFIG="/etc/postgresql/9.1/main/pg_hba.conf"
 OMV_POSTGRESQL_PLUGIN_XPATH="//services/postgresql"
 
 # Generate configuration only if the service is enabled.
@@ -33,7 +34,7 @@ fi
 data_sharedfolderref=$(omv_config_get "${OMV_POSTGRESQL_PLUGIN_XPATH}/data.sharedfolderref")
 data_directory="$(omv_get_sharedfolder_path "${data_sharedfolderref}")"
 port=$(omv_config_get "${OMV_POSTGRESQL_PLUGIN_XPATH}/port")
-listen_addresses=$(omv_config_get "${OMV_POSTGRESQL_PLUGIN_XPATH}/bind_address")
+listen_address=$(omv_config_get "${OMV_POSTGRESQL_PLUGIN_XPATH}/bind_address")
 extra_options=$(omv_config_get "${OMV_POSTGRESQL_PLUGIN_XPATH}/extra_options")
 
 current_data_directory=`cat ${POSTGRESQL_CONFIG} | grep data_directory | cut -d\' -f2`
@@ -52,7 +53,7 @@ hba_file = '/etc/postgresql/9.1/main/pg_hba.conf'
 ident_file = '/etc/postgresql/9.1/main/pg_ident.conf'
 external_pid_file = '/var/run/postgresql/9.1-main.pid'
 
-listen_addresses = '${listen_addresses}'
+listen_addresses = '${listen_address}'
 
 port = ${port}
 max_connections = 100
@@ -72,6 +73,23 @@ ${dt1}
 ${extra_options}
 EOF
 
+cat <<EOF > ${POSTGRESQL_HBA_CONFIG}
+# TYPE  DATABASE        USER            ADDRESS                 METHOD
+
+local   all             postgres                                peer
+local   all             all                                     peer
+host    all             all             127.0.0.1/32            md5
+host    all             all             ::1/128                 md5
+
+EOF
+
+if [ "${listen_address}" != "0.0.0.0" ]; then
+    la="${listen_address}/32"
+else
+    la="0.0.0.0/0"
+fi
+
+echo "host    all             all             ${la}               md5\n" >> ${POSTGRESQL_HBA_CONFIG}
 
 if [ "${current_data_directory}" != "${data_directory}" ]; then
     # Copy current data to the new directory and remove all files from the
