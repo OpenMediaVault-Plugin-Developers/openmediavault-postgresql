@@ -3,13 +3,14 @@
 # This file is distributed under the same license as the PACKAGE package.
 # 
 # Translators:
+# Miguel Anxo Bouzada <mbouzada@gmail.com>, 2015
 msgid ""
 msgstr ""
 "Project-Id-Version: openmediavault-postgresql\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-02-13 13:22-0600\n"
-"PO-Revision-Date: 2015-02-13 19:24+0000\n"
-"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"POT-Creation-Date: 2015-04-08 06:35-0500\n"
+"PO-Revision-Date: 2015-04-08 11:39+0000\n"
+"Last-Translator: Aaron Murray <aaron27@ryecoinc.com>\n"
 "Language-Team: Galician (http://www.transifex.com/projects/p/openmediavault-postgresql/language/gl/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -18,79 +19,60 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 msgid "Are you sure you want to reset the root password?"
-msgstr ""
+msgstr "Confirma que quere restabelecer o contrasinal de administrador (root)?"
 
 msgid "Bind address"
-msgstr ""
+msgstr "Ligar o enderezo"
 
 msgid "Confirmation"
-msgstr ""
-
-msgid "Data directory"
-msgstr ""
+msgstr "Confirmación"
 
 msgid "Enable"
-msgstr ""
+msgstr "Activar"
 
 msgid "Extra options"
-msgstr ""
+msgstr "Opcións adicionais"
 
 msgid "Extra options for section of PostgreSQL configuration."
-msgstr ""
+msgstr "Opcións adicionais para a configuración da sección de PostgreSQL."
 
 msgid "IP address to listen on. Use 0.0.0.0 for all host IPs."
-msgstr ""
-
-msgid ""
-"It should be noted that the shared folder should be empty when applying the "
-"configuration and should not be altered with additional files. The reason "
-"for this is that the plugin will copy all files to the shared folder and "
-"remove them from the old data location."
-msgstr ""
+msgstr "Enderezo IP a escoitar. Use 0.0.0.0 para todos os IP."
 
 msgid "Launch Management Site"
-msgstr ""
-
-msgid "Management"
-msgstr ""
+msgstr "Iniciar a páxina de administración"
 
 msgid "Password"
-msgstr ""
+msgstr "Contrasinal"
 
 msgid "Port"
-msgstr ""
+msgstr "Porto"
 
 msgid "Port to listen on."
-msgstr ""
+msgstr "Porto a escoitar."
 
 msgid "PostgreSQL"
-msgstr ""
+msgstr "PostgreSQL"
 
 msgid "Reset Password"
-msgstr ""
+msgstr "Restabelecer o contrasinal"
 
 msgid "Reset PostgreSQL postgres password"
-msgstr ""
+msgstr "Restabelecer o contrasinal de PostgreSQL"
 
 msgid "Resetting PostgreSQL root password."
-msgstr ""
+msgstr "Restabelecendo o contrasinal de administrador (root) de PostgreSQL"
 
 msgid "SQL management site"
-msgstr ""
+msgstr "Páxina de administración SQL"
 
 msgid "SQL management site."
-msgstr ""
+msgstr "Páxina de administración SQL."
 
 msgid "Settings"
-msgstr ""
-
-msgid "Show tab containing Management frame."
-msgstr ""
+msgstr "Axustes"
 
 msgid ""
 "The SQL web interface can be accessed <a href='/postgresql/' "
 "target='_blank'>here</a>."
-msgstr ""
-
-msgid "The location where PostgreSQL stores its data."
-msgstr ""
+msgstr "Pode acceder a interface web de administración SQL <a href='/postgresql/' target='_blank'>aquí</a>."

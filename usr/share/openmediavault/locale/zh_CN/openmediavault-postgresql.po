@@ -3,13 +3,14 @@
 # This file is distributed under the same license as the PACKAGE package.
 # 
 # Translators:
+# songming <by@songming.me>, 2015
 msgid ""
 msgstr ""
 "Project-Id-Version: openmediavault-postgresql\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-02-13 13:22-0600\n"
-"PO-Revision-Date: 2015-02-13 19:24+0000\n"
-"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"POT-Creation-Date: 2015-04-08 06:35-0500\n"
+"PO-Revision-Date: 2015-04-08 11:39+0000\n"
+"Last-Translator: Aaron Murray <aaron27@ryecoinc.com>\n"
 "Language-Team: Chinese (China) (http://www.transifex.com/projects/p/openmediavault-postgresql/language/zh_CN/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -18,79 +19,60 @@ msgstr ""
 "Plural-Forms: nplurals=1; plural=0;\n"
 
 msgid "Are you sure you want to reset the root password?"
-msgstr ""
+msgstr "你确定要重置root账户密码吗？"
 
 msgid "Bind address"
-msgstr ""
+msgstr "绑定地址"
 
 msgid "Confirmation"
-msgstr ""
-
-msgid "Data directory"
-msgstr ""
+msgstr "确认"
 
 msgid "Enable"
-msgstr ""
+msgstr "启用"
 
 msgid "Extra options"
-msgstr ""
+msgstr "扩展选项"
 
 msgid "Extra options for section of PostgreSQL configuration."
-msgstr ""
+msgstr "扩展选项用于配置更多PostgreSQL细节。"
 
 msgid "IP address to listen on. Use 0.0.0.0 for all host IPs."
-msgstr ""
-
-msgid ""
-"It should be noted that the shared folder should be empty when applying the "
-"configuration and should not be altered with additional files. The reason "
-"for this is that the plugin will copy all files to the shared folder and "
-"remove them from the old data location."
-msgstr ""
+msgstr "监听IP地址，使用0.0.0.0将监听所有主机IP。"
 
 msgid "Launch Management Site"
-msgstr ""
-
-msgid "Management"
-msgstr ""
+msgstr "运行管理后台"
 
 msgid "Password"
-msgstr ""
+msgstr "密码"
 
 msgid "Port"
-msgstr ""
+msgstr "端口"
 
 msgid "Port to listen on."
-msgstr ""
+msgstr "监听端口。"
 
 msgid "PostgreSQL"
-msgstr ""
+msgstr "PostgreSQL"
 
 msgid "Reset Password"
-msgstr ""
+msgstr "重置密码"
 
 msgid "Reset PostgreSQL postgres password"
-msgstr ""
+msgstr "重置PostgreSQL postgres密码"
 
 msgid "Resetting PostgreSQL root password."
-msgstr ""
+msgstr "重置PostgreSQL root密码。"
 
 msgid "SQL management site"
-msgstr ""
+msgstr "SQL管理后台"
 
 msgid "SQL management site."
-msgstr ""
+msgstr "SQL管理后台。"
 
 msgid "Settings"
-msgstr ""
-
-msgid "Show tab containing Management frame."
-msgstr ""
+msgstr "设置"
 
 msgid ""
 "The SQL web interface can be accessed <a href='/postgresql/' "
 "target='_blank'>here</a>."
-msgstr ""
-
-msgid "The location where PostgreSQL stores its data."
-msgstr ""
+msgstr "SQL网页可访问<a href='/postgresql/' target='_blank'>这里</a>。"

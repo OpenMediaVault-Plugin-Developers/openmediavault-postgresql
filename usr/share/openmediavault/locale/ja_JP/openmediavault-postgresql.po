@@ -3,13 +3,14 @@
 # This file is distributed under the same license as the PACKAGE package.
 # 
 # Translators:
+# Toshihiro Kan <kansuke4649@gmail.com>, 2015
 msgid ""
 msgstr ""
 "Project-Id-Version: openmediavault-postgresql\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-02-13 13:22-0600\n"
-"PO-Revision-Date: 2015-02-13 19:24+0000\n"
-"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"POT-Creation-Date: 2015-04-08 06:35-0500\n"
+"PO-Revision-Date: 2015-04-08 11:39+0000\n"
+"Last-Translator: Aaron Murray <aaron27@ryecoinc.com>\n"
 "Language-Team: Japanese (Japan) (http://www.transifex.com/projects/p/openmediavault-postgresql/language/ja_JP/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -18,79 +19,60 @@ msgstr ""
 "Plural-Forms: nplurals=1; plural=0;\n"
 
 msgid "Are you sure you want to reset the root password?"
-msgstr ""
+msgstr "rootのパスワードをリセットしてもよろしいですか？"
 
 msgid "Bind address"
-msgstr ""
+msgstr "バインドアドレス"
 
 msgid "Confirmation"
-msgstr ""
-
-msgid "Data directory"
-msgstr ""
+msgstr "確認"
 
 msgid "Enable"
-msgstr ""
+msgstr "有効化"
 
 msgid "Extra options"
-msgstr ""
+msgstr "追加のオプション"
 
 msgid "Extra options for section of PostgreSQL configuration."
-msgstr ""
+msgstr "PostgreSQL設定のセクションの追加オプション。"
 
 msgid "IP address to listen on. Use 0.0.0.0 for all host IPs."
-msgstr ""
-
-msgid ""
-"It should be noted that the shared folder should be empty when applying the "
-"configuration and should not be altered with additional files. The reason "
-"for this is that the plugin will copy all files to the shared folder and "
-"remove them from the old data location."
-msgstr ""
+msgstr "待ち受けるIPアドレス。0.0.0.0を使用するとホストのすべてのIPで待ち受けます。"
 
 msgid "Launch Management Site"
-msgstr ""
-
-msgid "Management"
-msgstr ""
+msgstr "マネジメントサイトの起動"
 
 msgid "Password"
-msgstr ""
+msgstr "パスワード"
 
 msgid "Port"
-msgstr ""
+msgstr "ポート"
 
 msgid "Port to listen on."
-msgstr ""
+msgstr "待ち受けるポート。"
 
 msgid "PostgreSQL"
-msgstr ""
+msgstr "PostgreSQL"
 
 msgid "Reset Password"
-msgstr ""
+msgstr "パスワードのリセット"
 
 msgid "Reset PostgreSQL postgres password"
-msgstr ""
+msgstr "PostgreSQL postgresパスワードのリセット"
 
 msgid "Resetting PostgreSQL root password."
-msgstr ""
+msgstr "PostgreSQL root パスワードのリセット。"
 
 msgid "SQL management site"
-msgstr ""
+msgstr "SQLマネジメントサイト"
 
 msgid "SQL management site."
-msgstr ""
+msgstr "SQLマネジメントサイト。"
 
 msgid "Settings"
-msgstr ""
-
-msgid "Show tab containing Management frame."
-msgstr ""
+msgstr "設定"
 
 msgid ""
 "The SQL web interface can be accessed <a href='/postgresql/' "
 "target='_blank'>here</a>."
-msgstr ""
-
-msgid "The location where PostgreSQL stores its data."
-msgstr ""
+msgstr "SQL Webインタフェースは  <a href='/postgresql/' target='_blank'>ここ</a> からアクセスできます。"

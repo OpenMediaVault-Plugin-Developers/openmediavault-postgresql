@@ -1,6 +1,7 @@
 openmediavault-postgresql (1.1) stable; urgency=low
 
-  * 
+  * Move data directory to extra options
+  * Update locales
 
  -- OpenMediaVault Plugin Developers <plugins@omv-extras.org>  Wed, 08 Apr 2015 06:27:21 -0500
 
