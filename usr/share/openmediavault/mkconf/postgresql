@@ -31,8 +31,6 @@ if [ "$(omv_config_get "${OMV_POSTGRESQL_PLUGIN_XPATH}/enable")" != "1" ]; then
 fi
 
 # Get settings.
-data_sharedfolderref=$(omv_config_get "${OMV_POSTGRESQL_PLUGIN_XPATH}/data.sharedfolderref")
-data_directory="$(omv_get_sharedfolder_path "${data_sharedfolderref}")"
 port=$(omv_config_get "${OMV_POSTGRESQL_PLUGIN_XPATH}/port")
 listen_address=$(omv_config_get "${OMV_POSTGRESQL_PLUGIN_XPATH}/bind_address")
 extra_options=$(omv_config_get "${OMV_POSTGRESQL_PLUGIN_XPATH}/extra_options")
@@ -47,8 +45,6 @@ dt1=`cat ${POSTGRESQL_CONFIG} | grep default_text_search_config`
 
 cat <<EOF > ${POSTGRESQL_CONFIG}
 # this file was automatically generated
-data_directory = '${data_directory}'
-
 hba_file = '/etc/postgresql/9.1/main/pg_hba.conf'
 ident_file = '/etc/postgresql/9.1/main/pg_ident.conf'
 external_pid_file = '/var/run/postgresql/9.1-main.pid'
@@ -90,16 +86,5 @@ else
 fi
 
 echo "host    all             all             ${la}               md5\n" >> ${POSTGRESQL_HBA_CONFIG}
-
-if [ "${current_data_directory}" != "${data_directory}" ]; then
-    # Copy current data to the new directory and remove all files from the
-    # old directory (but not the directory itself).
-    cp -rfp ${current_data_directory}/* ${data_directory}/
-    rm -rf ${current_data_directory}/*
-fi
-
-# Take ownership of the shared folder.
-chown -R postgres:postgres "${data_directory}"
-chmod -R 0700 "${data_directory}"
 
 exit 0

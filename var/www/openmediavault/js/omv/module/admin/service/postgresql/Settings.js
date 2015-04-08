@@ -34,32 +34,6 @@ Ext.define("OMV.module.admin.service.postgresql.Settings", {
         ptype        : "linkedfields",
         correlations : [{
             name : [
-                "data.sharedfolderref"
-            ],
-            conditions : [{
-                name  : "enable",
-                value : true
-            }],
-            properties : [
-                "!allowBlank",
-                "!allowNone"
-            ]
-        },{
-            name : [
-                "show_tab"
-            ],
-            conditions : [{
-                name  : "enable_management_site",
-                value : true
-            },{
-                name  : "enable",
-                value : true
-            }],
-            properties : [
-                "enabled"
-            ]
-        },{
-            name : [
                 "reset_password"
             ],
             conditions : [{
@@ -79,35 +53,6 @@ Ext.define("OMV.module.admin.service.postgresql.Settings", {
             }
         }]
     }],
-
-    initComponent : function () {
-        this.on("load", function() {
-            var checked = this.findField("enable").checked;
-            var show_tab = this.findField("show_tab").checked;
-            var parent = this.up("tabpanel");
-
-            if (!parent)
-                return;
-
-            var managementPanel = parent.down("panel[title=" + _("Management") + "]");
-
-            if (managementPanel) {
-                if (checked) {
-                    managementPanel.enable();
-                } else {
-                    managementPanel.disable();
-                }
-
-                if (show_tab) {
-                    managementPanel.tab.show();
-                } else {
-                    managementPanel.tab.hide();
-                }
-            }
-        }, this);
-
-        this.callParent(arguments);
-    },
 
     rpcService   : "PostgreSql",
     rpcGetMethod : "getSettings",
@@ -170,17 +115,6 @@ Ext.define("OMV.module.admin.service.postgresql.Settings", {
                     text  : _("IP address to listen on. Use 0.0.0.0 for all host IPs.")
                 }]
             },{
-                xtype      : "sharedfoldercombo",
-                name       : "data.sharedfolderref",
-                fieldLabel : _("Data directory"),
-                allowBlank : true,
-                allowNone  : false,
-                plugins    : [{
-                    ptype : "fieldinfo",
-                    text  : _("The location where PostgreSQL stores its data.") + " " +
-                            _("It should be noted that the shared folder should be empty when applying the configuration and should not be altered with additional files. The reason for this is that the plugin will copy all files to the shared folder and remove them from the old data location.")
-                }]
-            },{
                 xtype      : "textarea",
                 name       : "extra_options",
                 fieldLabel : _("Extra options"),
@@ -226,12 +160,6 @@ Ext.define("OMV.module.admin.service.postgresql.Settings", {
                     ptype : "fieldinfo",
                     text  : _("The SQL web interface can be accessed <a href='/postgresql/' target='_blank'>here</a>.")
                 }]
-            },{
-                xtype      : "checkbox",
-                name       : "show_tab",
-                fieldLabel : _("Enable"),
-                boxLabel   : _("Show tab containing Management frame."),
-                checked    : false
             }]
         }];
     },

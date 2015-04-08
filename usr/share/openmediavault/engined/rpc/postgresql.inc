@@ -75,11 +75,10 @@ class OMVRpcServicePostgreSQL extends OMVRpcServiceAbstract
         $initd = new OMVSysVInitScript("postgresql");
 
         // Modify result data
-        $object["enable"]            = intval($object["enable"]);
-        $object["port"]              = intval($object["port"]);
+        $object["enable"] = intval($object["enable"]);
+        $object["port"]   = intval($object["port"]);
 
         $object["enable_management_site"] = boolval($object["enable_management_site"]);
-        $object["show_tab"]               = boolval($object["show_tab"]);
 
         return $object;
     }
@@ -102,39 +101,26 @@ class OMVRpcServicePostgreSQL extends OMVRpcServiceAbstract
             '{
                 "type"       : "object",
                 "properties" : {
-                    "enable"               : { "type" : "boolean" },
-                    "port"                 : { "type" : "integer" },
-                    "bind_address"         : { "type" : "string" },
-                    "data.sharedfolderref" : {' . $GLOBALS["OMV_JSONSCHEMA_UUID_NONE"] . '},
-                    "extra_options"        : { "type" : "string" },
-
-                    "enable_management_site" : { "type" : "boolean" },
-                    "show_tab"               : { "type" : "boolean", "optional" : true }
+                    "enable"                 : { "type" : "boolean" },
+                    "port"                   : { "type" : "integer" },
+                    "bind_address"           : { "type" : "string" },
+                    "extra_options"          : { "type" : "string" },
+                    "enable_management_site" : { "type" : "boolean" }
                 }
             }'
         );
 
         // Prepare configuration data
         $object = array(
-            "enable"               => array_boolval($params, "enable"),
-            "port"                 => intval($params["port"]),
-            "bind_address"         => $params["bind_address"],
-            "data.sharedfolderref" => $params["data.sharedfolderref"],
-            "extra_options"        => trim($params["extra_options"]),
-
+            "enable"                 => array_boolval($params, "enable"),
+            "port"                   => intval($params["port"]),
+            "bind_address"           => $params["bind_address"],
+            "extra_options"          => trim($params["extra_options"]),
             "enable_management_site" => (
                 array_boolval($params, "enable_management_site") &&
                 array_boolval($params, "enable")
-            ),
-            "show_tab" => array_boolval($params, "show_tab"),
+            )
         );
-
-        if ($object["enable"] && empty($object["data.sharedfolderref"])) {
-            throw new OMVException(
-                OMVErrorMsg::E_CONFIG_OBJECT_INVALID,
-                "No data directory set when the plugin is enabled."
-            );
-        }
 
         // Set configuration object
         if (false === $xmlConfig->replace($this->getXPath(), $object)) {
@@ -179,8 +165,9 @@ class OMVRpcServicePostgreSQL extends OMVRpcServiceAbstract
         // Create password file
         $file = "/tmp/.openmediavault-postgresql-reset-pwd";
         file_put_contents($file, $params["root_password"]);
+        chmod($file, 0600);
 
-        $cmd = "sudo /usr/local/bin/postgresql-password 2>&1";
+        $cmd = "sudo /usr/sbin/postgresql-password 2>&1";
 
         if (0 !== $this->exec($cmd, $output)) {
             throw new OMVException(
