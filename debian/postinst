@@ -41,7 +41,7 @@ case "$1" in
             omv_config_add_element "/config/services" "${SERVICE_XPATH_NAME}"
             omv_config_add_element "${SERVICE_XPATH}" "enable" "0"
             omv_config_add_element "${SERVICE_XPATH}" "port" "5432"
-            omv_config_add_element "${SERVICE_XPATH}" "bind_address" "localhost"
+            omv_config_add_element "${SERVICE_XPATH}" "bind_address" "127.0.0.1"
             omv_config_add_element "${SERVICE_XPATH}" "extra_options" ""
             omv_config_add_element "${SERVICE_XPATH}" "enable_management_site" "0"
         fi

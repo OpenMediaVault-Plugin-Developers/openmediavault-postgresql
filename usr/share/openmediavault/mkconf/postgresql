@@ -23,7 +23,7 @@ set -e
 
 POSTGRESQL_CONFIG="/etc/postgresql/9.1/main/postgresql.conf"
 POSTGRESQL_HBA_CONFIG="/etc/postgresql/9.1/main/pg_hba.conf"
-OMV_POSTGRESQL_PLUGIN_XPATH="//services/postgresql"
+OMV_POSTGRESQL_PLUGIN_XPATH="/config/services/postgresql"
 
 # Generate configuration only if the service is enabled.
 if [ "$(omv_config_get "${OMV_POSTGRESQL_PLUGIN_XPATH}/enable")" != "1" ]; then
@@ -35,7 +35,17 @@ port=$(omv_config_get "${OMV_POSTGRESQL_PLUGIN_XPATH}/port")
 listen_address=$(omv_config_get "${OMV_POSTGRESQL_PLUGIN_XPATH}/bind_address")
 extra_options=$(omv_config_get "${OMV_POSTGRESQL_PLUGIN_XPATH}/extra_options")
 
-current_data_directory=`cat ${POSTGRESQL_CONFIG} | grep data_directory | cut -d\' -f2`
+case ${extra_options} in
+    *data_directory*)
+        data_directory=""
+    ;;
+
+    *)
+        data_dir=`cat ${POSTGRESQL_CONFIG} | grep data_directory | cut -d\' -f2`
+        data_directory="data_directory = '${data_dir}'"
+    ;;
+esac
+
 lc1=`cat ${POSTGRESQL_CONFIG} | grep lc_messages`
 lc2=`cat ${POSTGRESQL_CONFIG} | grep lc_monetary`
 lc3=`cat ${POSTGRESQL_CONFIG} | grep lc_numeric`
@@ -45,6 +55,7 @@ dt1=`cat ${POSTGRESQL_CONFIG} | grep default_text_search_config`
 
 cat <<EOF > ${POSTGRESQL_CONFIG}
 # this file was automatically generated
+${data_directory}
 hba_file = '/etc/postgresql/9.1/main/pg_hba.conf'
 ident_file = '/etc/postgresql/9.1/main/pg_ident.conf'
 external_pid_file = '/var/run/postgresql/9.1-main.pid'
